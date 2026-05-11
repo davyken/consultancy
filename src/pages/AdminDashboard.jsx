@@ -37,10 +37,12 @@ function Sidebar({ active, setActive, onLogout }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{
             width: 40, height: 40, borderRadius: 10,
-            background: 'linear-gradient(135deg, #2563a8, #e8a020)',
+            overflow: 'hidden',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: 'var(--font-display)', fontWeight: 900, color: 'white', fontSize: 16
-          }}>GR</div>
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+          }}>
+            <img src="/part7.jpeg" alt="Great Rift Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </div>
           <div>
             <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, color: 'white', fontSize: 15 }}>Great Rift</div>
             <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', letterSpacing: '1px', textTransform: 'uppercase' }}>Admin Panel</div>

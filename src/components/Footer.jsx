@@ -29,10 +29,12 @@ export default function Footer() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
               <div style={{
                 width: 48, height: 48, borderRadius: 12,
-                background: 'linear-gradient(135deg, #2563a8, #e8a020)',
+                overflow: 'hidden',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 20, color: 'white'
-              }}>GR</div>
+                boxShadow: '0 4px 16px rgba(0,0,0,0.2)'
+              }}>
+                <img src="/part7.jpeg" alt="Great Rift Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
               <div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, lineHeight: 1.1 }}>Great Rift</div>
                 <div style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>Consultancy</div>

@@ -53,15 +53,14 @@ export default function AdminLogin() {
         boxShadow: '0 32px 80px rgba(0,0,0,0.3)',
         position: 'relative', animation: 'scaleIn 0.4s cubic-bezier(0.34,1.56,0.64,1)'
       }}>
-        {/* Icon */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{
             width: 72, height: 72, borderRadius: 20,
-            background: 'linear-gradient(135deg, var(--primary), var(--teal))',
+            overflow: 'hidden',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 20px', boxShadow: '0 8px 24px rgba(26,58,92,0.3)'
+            margin: '0 auto 20px', boxShadow: '0 8px 24px rgba(26,58,92,0.1)'
           }}>
-            <Shield size={34} color="white" />
+            <img src="/part7.jpeg" alt="Great Rift Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', fontWeight: 700, color: 'var(--primary)', marginBottom: 6 }}>
             Admin Access

@@ -40,15 +40,15 @@ export default function Navbar() {
       borderBottom: scrolled ? '1px solid rgba(26,58,92,0.06)' : 'none'
     }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
-        {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
           <div style={{
             width: 44, height: 44, borderRadius: 12,
-            background: 'linear-gradient(135deg, #1a3a5c, #2563a8)',
+            overflow: 'hidden',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: 'var(--font-display)', fontWeight: 900, color: 'white', fontSize: 18,
-            boxShadow: '0 4px 16px rgba(26,58,92,0.35)'
-          }}>GR</div>
+            boxShadow: '0 4px 16px rgba(26,58,92,0.2)'
+          }}>
+            <img src="/part7.jpeg" alt="Great Rift Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </div>
           <div>
             <div style={{
               fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17,
