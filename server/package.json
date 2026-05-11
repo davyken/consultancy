@@ -1,0 +1,15 @@
+{
+  "name": "greatrift-backend",
+  "version": "1.0.0",
+  "description": "Node.js backend for Great Rift Consultancy admin panel",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
