@@ -250,6 +250,10 @@ if (existsSync(distPath)) {
 }
 
 // ── Start server ──────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`🚀 Backend server running at http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production' || process.env.VITE_DEV === 'true') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Backend server running at http://localhost:${PORT}`);
+  });
+}
+
+export default app;
