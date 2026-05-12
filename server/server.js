@@ -30,12 +30,29 @@ app.use(cors());
 app.use(express.json());
 
 // ── Database Connection ──────────────────────────────────────────────────────
-mongoose.connect(MONGODB_URI)
-  .then(() => {
+let isConnected = false;
+const connectDB = async () => {
+  if (isConnected) return;
+  try {
+    await mongoose.connect(MONGODB_URI);
+    isConnected = true;
     console.log('✅ Connected to MongoDB');
-    seedDatabase();
-  })
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+    await seedDatabase();
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err);
+    throw err;
+  }
+};
+
+// Middleware to ensure DB is connected
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: 'Database connection failed' });
+  }
+});
 
 // ── Seed logic ────────────────────────────────────────────────────────────────
 async function seedDatabase() {
