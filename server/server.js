@@ -56,12 +56,24 @@ app.use(async (req, res, next) => {
 
 // ── Seed logic ────────────────────────────────────────────────────────────────
 async function seedDatabase() {
-  const memberCount = await Member.countDocuments();
-  if (memberCount > 0) return;
-
-  console.log('🌱 Seeding database...');
+  console.log('🔍 Checking database state...');
   
+  const counts = {
+    members: await Member.countDocuments(),
+    services: await Service.countDocuments(),
+    projects: await Project.countDocuments(),
+    partners: await Partner.countDocuments(),
+    testimonials: await Testimonial.countDocuments(),
+    comments: await Comment.countDocuments(),
+    heroSlides: await HeroSlide.countDocuments(),
+    contact: await Contact.countDocuments(),
+    stats: await Stat.countDocuments()
+  };
+
+  console.log('📊 Current counts:', counts);
+
   const seedData = {
+    // ... (rest of the seed data is already in the file)
     members: [
       { name: "Vanesa Zoh Takuh", role: "Managing Director", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face", bio: "Leading Great Rift Consultancy with vision and dedication to empower clients worldwide.", email: "vanesa@greatriftconsultancy.com" },
       { name: "Barrister Ako Therex", role: "Legal Consultant", image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=400&h=400&fit=crop&crop=face", bio: "Expert legal counsel specializing in immigration law and international business regulations.", email: "ako@greatriftconsultancy.com" },
@@ -113,17 +125,44 @@ async function seedDatabase() {
     stats: [{ value: 2451, label: "Clients Served" }, { value: 2300, label: "Visas Processed" }, { value: 2780, label: "Consultations" }, { value: 2984, label: "Happy Families" }]
   };
 
-  await Member.insertMany(seedData.members);
-  await Service.insertMany(seedData.services);
-  await Project.insertMany(seedData.projects);
-  await Partner.insertMany(seedData.partners);
-  await Testimonial.insertMany(seedData.testimonials);
-  await Comment.insertMany(seedData.comments);
-  await HeroSlide.insertMany(seedData.heroSlides);
-  await Contact.create(seedData.contact);
-  await Stat.insertMany(seedData.stats);
+  if (counts.members === 0) {
+    console.log('🌱 Seeding members...');
+    await Member.insertMany(seedData.members);
+  }
+  if (counts.services === 0) {
+    console.log('🌱 Seeding services...');
+    await Service.insertMany(seedData.services);
+  }
+  if (counts.projects === 0) {
+    console.log('🌱 Seeding projects...');
+    await Project.insertMany(seedData.projects);
+  }
+  if (counts.partners === 0) {
+    console.log('🌱 Seeding partners...');
+    await Partner.insertMany(seedData.partners);
+  }
+  if (counts.testimonials === 0) {
+    console.log('🌱 Seeding testimonials...');
+    await Testimonial.insertMany(seedData.testimonials);
+  }
+  if (counts.comments === 0) {
+    console.log('🌱 Seeding comments...');
+    await Comment.insertMany(seedData.comments);
+  }
+  if (counts.heroSlides === 0) {
+    console.log('🌱 Seeding hero slides...');
+    await HeroSlide.insertMany(seedData.heroSlides);
+  }
+  if (counts.contact === 0) {
+    console.log('🌱 Seeding contact info...');
+    await Contact.create(seedData.contact);
+  }
+  if (counts.stats === 0) {
+    console.log('🌱 Seeding stats...');
+    await Stat.insertMany(seedData.stats);
+  }
 
-  console.log('✅ Database seeded!');
+  console.log('✅ Seeding check complete!');
 }
 
 // ── API routes ────────────────────────────────────────────────────────────────
