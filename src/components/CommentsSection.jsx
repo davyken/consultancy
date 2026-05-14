@@ -18,7 +18,7 @@ export default function CommentsSection() {
   };
 
   const startEdit = (comment) => {
-    setEditId(comment.id);
+    setEditId(comment._id);
     setEditText(comment.text);
     setEditingAuthor(comment.author);
   };
@@ -71,7 +71,7 @@ export default function CommentsSection() {
           </div>
         )}
         {[...data.comments].reverse().map((comment) => (
-          <div key={comment.id} style={{
+          <div key={comment._id} style={{
             background: 'white', borderRadius: 16, padding: '20px 24px',
             boxShadow: 'var(--shadow-sm)', border: '1px solid var(--light-gray)',
             transition: 'all 0.3s',
@@ -100,7 +100,7 @@ export default function CommentsSection() {
                     width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center',
                     cursor: 'pointer', color: 'var(--primary-light)', transition: 'all 0.2s'
                   }}><Edit2 size={14} /></button>
-                  <button onClick={() => deleteComment(comment.id)} style={{
+                  <button onClick={() => deleteComment(comment._id)} style={{
                     background: 'rgba(239,68,68,0.1)', border: 'none', borderRadius: 8,
                     width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center',
                     cursor: 'pointer', color: '#ef4444', transition: 'all 0.2s'
@@ -109,7 +109,7 @@ export default function CommentsSection() {
               )}
             </div>
 
-            {editId === comment.id ? (
+            {editId === comment._id ? (
               <div>
                 <textarea
                   value={editText}

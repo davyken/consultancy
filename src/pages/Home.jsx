@@ -30,13 +30,14 @@ function HeroCarousel({ slides }) {
   const slide = slides[current];
 
   return (
-    <div style={{ position: 'relative', height: '100vh', minHeight: 600, overflow: 'hidden' }}>
+    <div style={{ position: 'relative', height: '100vh', minHeight: 600, overflow: 'hidden', background: 'var(--primary)' }}>
       {/* Slides */}
       {slides.map((s, i) => (
-        <div key={s.id} style={{
+        <div key={s._id || i} style={{
           position: 'absolute', inset: 0,
           backgroundImage: `url(${s.bg})`,
           backgroundSize: 'cover', backgroundPosition: 'center',
+          backgroundColor: 'var(--primary)',
           opacity: i === current ? 1 : 0,
           transition: 'opacity 0.8s ease',
           transform: i === current ? 'scale(1)' : 'scale(1.05)',
@@ -190,7 +191,7 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, background: 'white', borderRadius: 20, boxShadow: 'var(--shadow-md)', margin: '-40px 0 0', position: 'relative', zIndex: 5, overflow: 'hidden' }}>
             {data.stats.map((s, i) => {
               const icons = [Globe, Users, Star, Award];
-              return <StatCounter key={i} value={s.value} label={s.label} icon={icons[i]} delay={i * 0.1} />;
+              return <StatCounter key={s._id || i} value={s.value} label={s.label} icon={icons[i]} delay={i * 0.1} />;
             })}
           </div>
         </div>
@@ -235,7 +236,7 @@ export default function Home() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
             {data.services.slice(0, 3).map((s, i) => (
-              <div key={s.id} style={{
+              <div key={s._id || i} style={{
                 borderRadius: 20, overflow: 'hidden',
                 boxShadow: 'var(--shadow-sm)', background: 'white',
                 transition: 'all 0.35s',
@@ -323,7 +324,7 @@ export default function Home() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24 }}>
             {data.members.slice(0, 4).map((m, i) => (
-              <div key={m.id} style={{
+              <div key={m._id || i} style={{
                 background: 'white', borderRadius: 20, overflow: 'hidden',
                 boxShadow: 'var(--shadow-sm)', textAlign: 'center',
                 transition: 'all 0.35s',
