@@ -117,9 +117,9 @@ async function seedDatabase() {
       { author: "Amelia Fokou", text: "Very professional service. Highly recommend for scholarship applications.", date: "2024-04-01", edited: false }
     ],
     heroSlides: [
-      { title: "Crafting Your Global Story", subtitle: "Trusted Partner for Immigration, Education & Real Estate", cta: "Explore Our Services", bg: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=1600&h=900&fit=crop" },
-      { title: "Navigate with Confidence", subtitle: "Expert guidance across immigration, logistics, and financial aid", cta: "Meet Our Team", bg: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&h=900&fit=crop" },
-      { title: "Empowering Global Journeys", subtitle: "Over 2,000 clients successfully served across 20+ countries", cta: "Our Projects", bg: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&h=900&fit=crop" }
+      { title: "Build Your Digital Presence", subtitle: "Modern websites, web & mobile apps built with cutting-edge technology for businesses in Cameroon and beyond.", cta: "Explore IT Services", bg: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600&h=900&fit=crop" },
+      { title: "Invest in Land in Cameroon", subtitle: "Residential, commercial and agricultural plots in Yaoundé, Buea, Bamenda — all with verified land titles.", cta: "View Listings", bg: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&h=900&fit=crop" },
+      { title: "Your Trusted Partner", subtitle: "Great Rift Consultancy — IT solutions and real estate services you can count on.", cta: "Contact Us", bg: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1600&h=900&fit=crop" }
     ],
     contact: { phone1: "+237 671 323 248", phone2: "+237 655 049 061", email: "info@greatriftconsultancy.com", address: "Yaoundé Cameroon, Montée Centre", facebook: "https://web.facebook.com/profile.php?id=61561484548746", instagram: "https://www.instagram.com/greatriftconsultancy/", whatsapp: "237671323248" },
     stats: [{ value: 2451, label: "Clients Served" }, { value: 2300, label: "Visas Processed" }, { value: 2780, label: "Consultations" }, { value: 2984, label: "Happy Families" }]
