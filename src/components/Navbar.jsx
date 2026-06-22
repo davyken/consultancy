@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { useLang } from '../context/LanguageContext';
 import { Menu, X, Shield, Monitor, Home as HomeIcon, ChevronDown } from 'lucide-react';
-
-const mainLinks = [
-  { to: '/', label: 'Accueil' },
-  { to: '/about', label: 'À Propos' },
-  { to: '/contact', label: 'Contact' },
-];
-
-const moreLinks = [
-  { to: '/team', label: '👥 Équipe' },
-  { to: '/projects', label: '📁 Projets' },
-  { to: '/partners', label: '🤝 Partenaires' },
-  { to: '/testimonials', label: '⭐ Témoignages' },
-  { to: '/services', label: '🗂️ Nos Services' },
-];
-
-const sectors = [
-  { to: '/it-services', label: 'IT Services', icon: Monitor, color: '#1a3a5c', desc: 'Web, Mobile, SEO' },
-  { to: '/real-estate', label: 'Immobilier', icon: HomeIcon, color: '#0d7e79', desc: 'Terrains au Cameroun' },
-];
 
 export default function Navbar() {
   const { isAdmin, adminLogout } = useApp();
+  const { lang, toggleLang, t } = useLang();
+
+  const mainLinks = [
+    { to: '/', label: t.nav.home },
+    { to: '/about', label: t.nav.about },
+    { to: '/contact', label: t.nav.contact },
+  ];
+
+  const moreLinks = [
+    { to: '/team', label: t.nav.team },
+    { to: '/projects', label: t.nav.projects },
+    { to: '/partners', label: t.nav.partners },
+    { to: '/testimonials', label: t.nav.testimonials },
+    { to: '/services', label: t.nav.services },
+  ];
+
+  const sectors = [
+    { to: '/it-services', label: t.nav.itServices, icon: Monitor, color: '#1a3a5c' },
+    { to: '/real-estate', label: t.nav.realEstate, icon: HomeIcon, color: '#0d7e79' },
+  ];
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -45,7 +48,7 @@ export default function Navbar() {
       ? (scrolled ? 'var(--primary)' : 'white')
       : (scrolled ? 'var(--dark-2)' : 'rgba(255,255,255,0.85)');
 
-  const isMoreActive = moreLinks.some(l => location.pathname === l.to.replace(/[^/\w]/g, '').split(' ')[0]);
+  const isMoreActive = moreLinks.some(l => location.pathname === l.to.split(' ')[0]);
 
   return (
     <nav style={{
@@ -71,7 +74,6 @@ export default function Navbar() {
 
         {/* ── Desktop Nav ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 2 }} className="desktop-nav">
-          {/* Core links */}
           {mainLinks.map(link => {
             const active = location.pathname === link.to;
             return (
@@ -89,7 +91,7 @@ export default function Navbar() {
             );
           })}
 
-          {/* "Plus" dropdown */}
+          {/* "More" dropdown */}
           <div style={{ position: 'relative' }}
             onMouseEnter={() => setMoreOpen(true)}
             onMouseLeave={() => setMoreOpen(false)}
@@ -102,9 +104,8 @@ export default function Navbar() {
               borderBottom: isMoreActive ? '2px solid var(--accent)' : '2px solid transparent',
               transition: 'all 0.25s',
             }}>
-              Plus <ChevronDown size={13} style={{ transition: 'transform 0.25s', transform: moreOpen ? 'rotate(180deg)' : 'none' }} />
+              {t.nav.more} <ChevronDown size={13} style={{ transition: 'transform 0.25s', transform: moreOpen ? 'rotate(180deg)' : 'none' }} />
             </button>
-
             {moreOpen && (
               <div style={{
                 position: 'absolute', top: 'calc(100% + 4px)', left: 0,
@@ -112,8 +113,7 @@ export default function Navbar() {
                 boxShadow: '0 20px 50px rgba(26,58,92,0.15)',
                 border: '1px solid rgba(26,58,92,0.06)',
                 padding: '8px', minWidth: 200,
-                animation: 'fadeInDown 0.2s ease',
-                zIndex: 100,
+                animation: 'fadeInDown 0.2s ease', zIndex: 100,
               }}>
                 {moreLinks.map(link => {
                   const active = location.pathname === link.to;
@@ -135,8 +135,9 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ── Right side: sector pills + admin ── */}
+        {/* ── Right side ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {/* Sector pills */}
           <div style={{ display: 'flex', gap: 6 }} className="sector-pills">
             {sectors.map(s => {
               const active = location.pathname === s.to;
@@ -160,6 +161,27 @@ export default function Navbar() {
             })}
           </div>
 
+          {/* Language toggle */}
+          <button
+            onClick={toggleLang}
+            title={lang === 'en' ? 'Switch to French' : 'Passer en anglais'}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 4,
+              padding: '6px 12px', borderRadius: 100,
+              border: '1.5px solid',
+              borderColor: scrolled ? 'rgba(26,58,92,0.2)' : 'rgba(255,255,255,0.35)',
+              background: 'transparent',
+              color: scrolled ? 'var(--primary)' : 'white',
+              fontSize: 12, fontWeight: 800, cursor: 'pointer',
+              letterSpacing: '0.5px',
+              transition: 'all 0.25s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = scrolled ? 'var(--primary)' : 'rgba(255,255,255,0.15)'; e.currentTarget.style.color = scrolled ? 'white' : 'white'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = scrolled ? 'var(--primary)' : 'white'; }}
+          >
+            {lang === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
+          </button>
+
           {isAdmin ? (
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
               <Link to="/admin" className="btn btn-accent btn-sm"><Shield size={14} /> Dashboard</Link>
@@ -180,8 +202,19 @@ export default function Navbar() {
       {/* ── Mobile Menu ── */}
       {menuOpen && (
         <div style={{ background: 'white', borderTop: '1px solid var(--light-gray)', padding: '12px 0 24px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)', animation: 'fadeInDown 0.3s ease' }}>
-          {/* Sector pills */}
-          <div style={{ padding: '10px 20px', display: 'flex', gap: 10 }}>
+          {/* Language toggle mobile */}
+          <div style={{ padding: '8px 20px' }}>
+            <button onClick={toggleLang} style={{
+              padding: '8px 18px', borderRadius: 100, border: '1.5px solid var(--light-gray)',
+              background: 'var(--off-white)', color: 'var(--primary)',
+              fontSize: 13, fontWeight: 700, cursor: 'pointer', width: '100%',
+            }}>
+              {lang === 'en' ? '🇫🇷 Switch to French' : '🇬🇧 Switch to English'}
+            </button>
+          </div>
+
+          {/* Sector buttons */}
+          <div style={{ padding: '6px 20px 8px', display: 'flex', gap: 10 }}>
             {sectors.map(s => (
               <Link key={s.to} to={s.to} style={{
                 flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
@@ -197,7 +230,6 @@ export default function Navbar() {
 
           <div style={{ height: 1, background: 'var(--light-gray)', margin: '6px 0 4px' }} />
 
-          {/* Core links */}
           {mainLinks.map(link => {
             const active = location.pathname === link.to;
             return (
@@ -211,7 +243,6 @@ export default function Navbar() {
             );
           })}
 
-          {/* More links */}
           {moreLinks.map(link => {
             const active = location.pathname === link.to;
             return (

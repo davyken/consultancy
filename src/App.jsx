@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
+import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -36,6 +37,7 @@ function Layout({ children }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <LanguageProvider>
       <AppProvider>
         <Routes>
           <Route path="/admin/login" element={<AdminLogin />} />
@@ -58,6 +60,7 @@ export default function App() {
           } />
         </Routes>
       </AppProvider>
+      </LanguageProvider>
     </BrowserRouter>
   );
 }
