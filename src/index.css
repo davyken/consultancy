@@ -427,3 +427,10 @@ label {
     right: 20px;
   }
 }
+
+/* Stats grid — 2-col on mobile */
+@media (max-width: 640px) {
+  .stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

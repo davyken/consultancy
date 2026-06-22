@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { Menu, X, Shield, ChevronDown } from 'lucide-react';
+import { Menu, X, Shield, Monitor, Home as HomeIcon, ChevronDown } from 'lucide-react';
 
-const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/services', label: 'Services' },
-  { to: '/team', label: 'Team' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/partners', label: 'Partners' },
-  { to: '/testimonials', label: 'Testimonials' },
+const mainLinks = [
+  { to: '/', label: 'Accueil' },
+  { to: '/about', label: 'À Propos' },
   { to: '/contact', label: 'Contact' },
+];
+
+const moreLinks = [
+  { to: '/team', label: '👥 Équipe' },
+  { to: '/projects', label: '📁 Projets' },
+  { to: '/partners', label: '🤝 Partenaires' },
+  { to: '/testimonials', label: '⭐ Témoignages' },
+  { to: '/services', label: '🗂️ Nos Services' },
+];
+
+const sectors = [
+  { to: '/it-services', label: 'IT Services', icon: Monitor, color: '#1a3a5c', desc: 'Web, Mobile, SEO' },
+  { to: '/real-estate', label: 'Immobilier', icon: HomeIcon, color: '#0d7e79', desc: 'Terrains au Cameroun' },
 ];
 
 export default function Navbar() {
   const { isAdmin, adminLogout } = useApp();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -28,7 +37,15 @@ export default function Navbar() {
 
   useEffect(() => {
     setMenuOpen(false);
+    setMoreOpen(false);
   }, [location]);
+
+  const textColor = (active) =>
+    active
+      ? (scrolled ? 'var(--primary)' : 'white')
+      : (scrolled ? 'var(--dark-2)' : 'rgba(255,255,255,0.85)');
+
+  const isMoreActive = moreLinks.some(l => location.pathname === l.to.replace(/[^/\w]/g, '').split(' ')[0]);
 
   return (
     <nav style={{
@@ -37,142 +54,194 @@ export default function Navbar() {
       backdropFilter: scrolled ? 'blur(12px)' : 'none',
       boxShadow: scrolled ? '0 2px 20px rgba(26,58,92,0.1)' : 'none',
       transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-      borderBottom: scrolled ? '1px solid rgba(26,58,92,0.06)' : 'none'
+      borderBottom: scrolled ? '1px solid rgba(26,58,92,0.06)' : 'none',
     }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
+
+        {/* ── Logo ── */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <div style={{
-            width: 44, height: 44, borderRadius: 12,
-            overflow: 'hidden',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 16px rgba(26,58,92,0.2)'
-          }}>
-            <img src="/part7.jpeg" alt="Great Rift Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ width: 44, height: 44, borderRadius: 12, overflow: 'hidden', boxShadow: '0 4px 16px rgba(26,58,92,0.2)' }}>
+            <img src="/part7.jpeg" alt="Great Rift" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <div>
-            <div style={{
-              fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17,
-              color: scrolled ? 'var(--primary)' : 'white',
-              lineHeight: 1.1, transition: 'color 0.4s'
-            }}>Great Rift</div>
-            <div style={{
-              fontSize: 10, fontWeight: 600, letterSpacing: '1.5px',
-              textTransform: 'uppercase',
-              color: scrolled ? 'var(--accent)' : 'rgba(255,255,255,0.8)',
-              transition: 'color 0.4s'
-            }}>Consultancy</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: scrolled ? 'var(--primary)' : 'white', lineHeight: 1.1, transition: 'color 0.4s' }}>Great Rift</div>
+            <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: scrolled ? 'var(--accent)' : 'rgba(255,255,255,0.8)', transition: 'color 0.4s' }}>Consultancy</div>
           </div>
         </Link>
 
-        {/* Desktop Nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="desktop-nav">
-          {navLinks.map(link => {
+        {/* ── Desktop Nav ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 2 }} className="desktop-nav">
+          {/* Core links */}
+          {mainLinks.map(link => {
             const active = location.pathname === link.to;
             return (
               <Link key={link.to} to={link.to} style={{
-                padding: '8px 14px',
-                borderRadius: 8,
-                textDecoration: 'none',
-                fontSize: 14,
-                fontWeight: active ? 700 : 500,
-                color: active
-                  ? (scrolled ? 'var(--primary)' : 'white')
-                  : (scrolled ? 'var(--dark-2)' : 'rgba(255,255,255,0.85)'),
+                padding: '8px 13px', borderRadius: 8, textDecoration: 'none',
+                fontSize: 14, fontWeight: active ? 700 : 500,
+                color: textColor(active),
                 background: active ? (scrolled ? 'rgba(26,58,92,0.08)' : 'rgba(255,255,255,0.15)') : 'transparent',
-                transition: 'all 0.25s',
                 borderBottom: active ? '2px solid var(--accent)' : '2px solid transparent',
+                transition: 'all 0.25s',
               }}
-                onMouseEnter={e => {
-                  if (!active) {
-                    e.target.style.background = scrolled ? 'rgba(26,58,92,0.06)' : 'rgba(255,255,255,0.1)';
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!active) e.target.style.background = 'transparent';
-                }}
+                onMouseEnter={e => { if (!active) e.currentTarget.style.background = scrolled ? 'rgba(26,58,92,0.06)' : 'rgba(255,255,255,0.1)'; }}
+                onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; }}
               >{link.label}</Link>
             );
           })}
+
+          {/* "Plus" dropdown */}
+          <div style={{ position: 'relative' }}
+            onMouseEnter={() => setMoreOpen(true)}
+            onMouseLeave={() => setMoreOpen(false)}
+          >
+            <button style={{
+              display: 'flex', alignItems: 'center', gap: 5,
+              padding: '8px 13px', borderRadius: 8, border: 'none', background: 'none',
+              fontSize: 14, fontWeight: isMoreActive ? 700 : 500, cursor: 'pointer',
+              color: textColor(isMoreActive),
+              borderBottom: isMoreActive ? '2px solid var(--accent)' : '2px solid transparent',
+              transition: 'all 0.25s',
+            }}>
+              Plus <ChevronDown size={13} style={{ transition: 'transform 0.25s', transform: moreOpen ? 'rotate(180deg)' : 'none' }} />
+            </button>
+
+            {moreOpen && (
+              <div style={{
+                position: 'absolute', top: 'calc(100% + 4px)', left: 0,
+                background: 'white', borderRadius: 14,
+                boxShadow: '0 20px 50px rgba(26,58,92,0.15)',
+                border: '1px solid rgba(26,58,92,0.06)',
+                padding: '8px', minWidth: 200,
+                animation: 'fadeInDown 0.2s ease',
+                zIndex: 100,
+              }}>
+                {moreLinks.map(link => {
+                  const active = location.pathname === link.to;
+                  return (
+                    <Link key={link.to} to={link.to} style={{
+                      display: 'block', padding: '10px 14px', borderRadius: 10,
+                      textDecoration: 'none', fontSize: 14, fontWeight: active ? 700 : 500,
+                      color: active ? 'var(--primary)' : 'var(--dark-2)',
+                      background: active ? 'rgba(26,58,92,0.07)' : 'transparent',
+                      transition: 'background 0.2s',
+                    }}
+                      onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'rgba(26,58,92,0.04)'; }}
+                      onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; }}
+                    >{link.label}</Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Right side */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        {/* ── Right side: sector pills + admin ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: 'flex', gap: 6 }} className="sector-pills">
+            {sectors.map(s => {
+              const active = location.pathname === s.to;
+              return (
+                <Link key={s.to} to={s.to} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 5,
+                  padding: '7px 15px', borderRadius: 100,
+                  fontSize: 12, fontWeight: 700, textDecoration: 'none',
+                  border: '1.5px solid',
+                  borderColor: active ? s.color : (scrolled ? 'rgba(26,58,92,0.2)' : 'rgba(255,255,255,0.35)'),
+                  background: active ? s.color : 'transparent',
+                  color: active ? 'white' : (scrolled ? 'var(--dark-2)' : 'rgba(255,255,255,0.9)'),
+                  transition: 'all 0.25s',
+                }}
+                  onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = s.color; e.currentTarget.style.color = s.color; } }}
+                  onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = scrolled ? 'rgba(26,58,92,0.2)' : 'rgba(255,255,255,0.35)'; e.currentTarget.style.color = scrolled ? 'var(--dark-2)' : 'rgba(255,255,255,0.9)'; } }}
+                >
+                  <s.icon size={12} /> {s.label}
+                </Link>
+              );
+            })}
+          </div>
+
           {isAdmin ? (
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <Link to="/admin" className="btn btn-accent btn-sm" style={{ gap: 6 }}>
-                <Shield size={14} /> Dashboard
-              </Link>
-              <button onClick={adminLogout} className="btn btn-sm" style={{
-                background: 'rgba(255,255,255,0.15)',
-                color: scrolled ? 'var(--primary)' : 'white',
-                border: '1px solid rgba(255,255,255,0.3)'
-              }}>Logout</button>
+              <Link to="/admin" className="btn btn-accent btn-sm"><Shield size={14} /> Dashboard</Link>
+              <button onClick={adminLogout} className="btn btn-sm" style={{ background: 'rgba(255,255,255,0.15)', color: scrolled ? 'var(--primary)' : 'white', border: '1px solid rgba(255,255,255,0.3)' }}>Logout</button>
             </div>
           ) : (
-            <Link to="/admin/login" style={{
-              display: 'flex', alignItems: 'center', gap: 6,
-              fontSize: 13, fontWeight: 600, textDecoration: 'none',
-              color: scrolled ? 'var(--mid-gray)' : 'rgba(255,255,255,0.7)',
-              transition: 'color 0.3s'
-            }}>
-              <Shield size={15} /> Admin
+            <Link to="/admin/login" style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 13, fontWeight: 600, textDecoration: 'none', color: scrolled ? 'var(--mid-gray)' : 'rgba(255,255,255,0.65)', transition: 'color 0.3s' }}>
+              <Shield size={14} />
             </Link>
           )}
 
-          {/* Hamburger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="mobile-hamburger"
-            style={{
-              background: 'none', border: 'none', cursor: 'pointer',
-              color: scrolled ? 'var(--primary)' : 'white',
-              display: 'none', padding: 4
-            }}
-          >
+          <button onClick={() => setMenuOpen(!menuOpen)} className="mobile-hamburger" style={{ background: 'none', border: 'none', cursor: 'pointer', color: scrolled ? 'var(--primary)' : 'white', display: 'none', padding: 4 }}>
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* ── Mobile Menu ── */}
       {menuOpen && (
-        <div style={{
-          background: 'white',
-          borderTop: '1px solid var(--light-gray)',
-          padding: '16px 0',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-          animation: 'fadeInDown 0.3s ease'
-        }}>
-          {navLinks.map(link => {
+        <div style={{ background: 'white', borderTop: '1px solid var(--light-gray)', padding: '12px 0 24px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)', animation: 'fadeInDown 0.3s ease' }}>
+          {/* Sector pills */}
+          <div style={{ padding: '10px 20px', display: 'flex', gap: 10 }}>
+            {sectors.map(s => (
+              <Link key={s.to} to={s.to} style={{
+                flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                padding: '10px', borderRadius: 12, textDecoration: 'none',
+                background: location.pathname === s.to ? s.color : `${s.color}12`,
+                color: location.pathname === s.to ? 'white' : s.color,
+                fontSize: 13, fontWeight: 700,
+              }}>
+                <s.icon size={14} /> {s.label}
+              </Link>
+            ))}
+          </div>
+
+          <div style={{ height: 1, background: 'var(--light-gray)', margin: '6px 0 4px' }} />
+
+          {/* Core links */}
+          {mainLinks.map(link => {
             const active = location.pathname === link.to;
             return (
               <Link key={link.to} to={link.to} style={{
-                display: 'block', padding: '12px 24px',
-                textDecoration: 'none',
-                fontSize: 15,
-                fontWeight: active ? 700 : 500,
+                display: 'block', padding: '11px 24px', textDecoration: 'none',
+                fontSize: 15, fontWeight: active ? 700 : 500,
                 color: active ? 'var(--primary)' : 'var(--dark-2)',
                 background: active ? 'rgba(26,58,92,0.06)' : 'transparent',
-                borderLeft: active ? '3px solid var(--accent)' : '3px solid transparent'
+                borderLeft: active ? '3px solid var(--accent)' : '3px solid transparent',
               }}>{link.label}</Link>
             );
           })}
+
+          {/* More links */}
+          {moreLinks.map(link => {
+            const active = location.pathname === link.to;
+            return (
+              <Link key={link.to} to={link.to} style={{
+                display: 'block', padding: '11px 24px', textDecoration: 'none',
+                fontSize: 14, fontWeight: active ? 700 : 400,
+                color: active ? 'var(--primary)' : 'var(--mid-gray)',
+                background: active ? 'rgba(26,58,92,0.04)' : 'transparent',
+                borderLeft: active ? '3px solid var(--accent)' : '3px solid transparent',
+              }}>{link.label}</Link>
+            );
+          })}
+
           {isAdmin ? (
-            <div style={{ padding: '12px 24px', display: 'flex', gap: 10 }}>
+            <div style={{ padding: '12px 24px', display: 'flex', gap: 10, marginTop: 4 }}>
               <Link to="/admin" className="btn btn-accent btn-sm">Dashboard</Link>
               <button onClick={adminLogout} className="btn btn-outline btn-sm">Logout</button>
             </div>
           ) : (
-            <Link to="/admin/login" style={{ display: 'block', padding: '12px 24px', color: 'var(--mid-gray)', textDecoration: 'none', fontSize: 14 }}>
-              <Shield size={14} style={{ marginRight: 6 }} /> Admin Login
+            <Link to="/admin/login" style={{ display: 'block', padding: '11px 24px', color: 'var(--mid-gray)', textDecoration: 'none', fontSize: 13 }}>
+              <Shield size={13} style={{ marginRight: 6, verticalAlign: 'middle' }} /> Admin
             </Link>
           )}
         </div>
       )}
 
       <style>{`
-        @media (max-width: 960px) {
+        @media (max-width: 1060px) {
           .desktop-nav { display: none !important; }
+          .sector-pills { display: none !important; }
           .mobile-hamburger { display: block !important; }
         }
       `}</style>
