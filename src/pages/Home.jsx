@@ -11,6 +11,12 @@ import CommentsSection from '../components/CommentsSection';
 
 /* ── Hero Carousel ─────────────────────────────────────────────── */
 function HeroCarousel({ slides }) {
+  const { t } = useLang();
+  // Merge translated text with API slides (keep bg image from API)
+  slides = slides.map((s, i) => ({
+    ...s,
+    ...(t.hero[i] || {}),
+  }));
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const timerRef = useRef(null);

@@ -15,6 +15,13 @@ const t = {
       realEstate: 'Real Estate',
     },
 
+    // Hero slides (text only — bg image comes from API)
+    hero: [
+      { title: 'Build Your Digital Presence', subtitle: 'Modern websites, web & mobile apps built with cutting-edge technology for businesses in Cameroon and beyond.', cta: 'Explore IT Services' },
+      { title: 'Invest in Land in Cameroon', subtitle: 'Residential, commercial and agricultural plots in Yaoundé, Buea, Bamenda — all with verified land titles.', cta: 'View Listings' },
+      { title: 'Your Trusted Partner', subtitle: 'Great Rift Consultancy — IT solutions and real estate services you can count on.', cta: 'Contact Us' },
+    ],
+
     // Home
     home: {
       sectorTag: 'Our Sectors',
@@ -215,6 +222,13 @@ const t = {
       itServices: 'IT Services',
       realEstate: 'Immobilier',
     },
+
+    // Hero slides (French)
+    hero: [
+      { title: 'Développez Votre Présence Digitale', subtitle: 'Sites web, applications web & mobiles modernes construits avec les dernières technologies pour les entreprises au Cameroun et au-delà.', cta: 'Voir les services IT' },
+      { title: 'Investissez dans un Terrain au Cameroun', subtitle: 'Terrains résidentiels, commerciaux et agricoles à Yaoundé, Buea, Bamenda — tous avec titres fonciers vérifiés.', cta: 'Voir les annonces' },
+      { title: 'Votre Partenaire de Confiance', subtitle: 'Great Rift Consultancy — solutions IT et services immobiliers sur lesquels vous pouvez compter.', cta: 'Nous contacter' },
+    ],
 
     home: {
       sectorTag: 'Nos Domaines',
